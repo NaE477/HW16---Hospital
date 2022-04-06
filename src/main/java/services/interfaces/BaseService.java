@@ -1,6 +1,6 @@
 package services.interfaces;
 
-import entities.BaseEntity;
+import entities.base.BaseEntity;
 
 import java.util.List;
 

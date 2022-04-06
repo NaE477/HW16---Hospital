@@ -1,6 +1,6 @@
 package repositories.impls;
 
-import entities.User;
+import entities.base.User;
 import repositories.interfaces.BaseUserRepository;
 
 import javax.persistence.EntityManagerFactory;

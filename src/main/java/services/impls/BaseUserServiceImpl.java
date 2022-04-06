@@ -1,6 +1,6 @@
 package services.impls;
 
-import entities.User;
+import entities.base.User;
 import repositories.interfaces.BaseUserRepository;
 import services.interfaces.BaseUserService;
 

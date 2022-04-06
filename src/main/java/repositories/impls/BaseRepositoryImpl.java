@@ -1,6 +1,6 @@
 package repositories.impls;
 
-import entities.BaseEntity;
+import entities.base.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;

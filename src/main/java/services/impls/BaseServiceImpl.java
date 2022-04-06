@@ -1,6 +1,6 @@
 package services.impls;
 
-import entities.BaseEntity;
+import entities.base.BaseEntity;
 import lombok.RequiredArgsConstructor;
 import repositories.interfaces.BaseRepository;
 import services.interfaces.BaseService;

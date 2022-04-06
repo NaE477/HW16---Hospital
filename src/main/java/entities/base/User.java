@@ -1,5 +1,6 @@
-package entities;
+package entities.base;
 
+import entities.base.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
