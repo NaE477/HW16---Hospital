@@ -1,7 +1,6 @@
 package services.impls;
 
 import entities.Admin;
-import repositories.impls.BaseUserRepositoryImpl;
 import repositories.interfaces.BaseUserRepository;
 import services.interfaces.AdminService;
 

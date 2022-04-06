@@ -2,5 +2,5 @@ package services.interfaces;
 
 import entities.Doctor;
 
-public interface DoctorService extends BaseService<Doctor> {
+public interface DoctorService extends BaseUserService<Doctor> {
 }

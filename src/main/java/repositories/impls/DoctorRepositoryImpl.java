@@ -5,7 +5,7 @@ import repositories.interfaces.DoctorRepository;
 
 import javax.persistence.EntityManagerFactory;
 
-public class DoctorRepositoryImpl extends BaseRepositoryImpl<Doctor> implements DoctorRepository {
+public class DoctorRepositoryImpl extends BaseUserRepositoryImpl<Doctor> implements DoctorRepository {
     public DoctorRepositoryImpl(EntityManagerFactory entityManagerFactory, Class<Doctor> clazz) {
         super(entityManagerFactory, clazz);
     }

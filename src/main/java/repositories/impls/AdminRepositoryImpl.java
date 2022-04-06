@@ -5,7 +5,7 @@ import repositories.interfaces.AdminRepository;
 
 import javax.persistence.EntityManagerFactory;
 
-public class AdminRepositoryImpl extends BaseRepositoryImpl<Admin> implements AdminRepository {
+public class AdminRepositoryImpl extends BaseUserRepositoryImpl<Admin> implements AdminRepository {
     public AdminRepositoryImpl(EntityManagerFactory entityManagerFactory, Class<Admin> clazz) {
         super(entityManagerFactory, clazz);
     }
