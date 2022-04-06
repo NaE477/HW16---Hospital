@@ -1,4 +1,6 @@
 package repositories.interfaces;
 
-public interface AppointmentRepository {
+import entities.Appointment;
+
+public interface AppointmentRepository extends BaseRepository<Appointment> {
 }
