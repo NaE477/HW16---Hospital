@@ -1,6 +1,11 @@
 package services.interfaces;
 
+import entities.Clinic;
 import entities.Doctor;
 
-public interface DoctorService extends BaseUserService<Doctor> {
+import java.util.List;
+
+public interface DoctorService extends BaseService<Doctor> {
+    Doctor findByUsername(String username);
+    List<Doctor> findAllByClinic(Clinic clinic);
 }

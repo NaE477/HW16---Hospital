@@ -1,12 +1,24 @@
 package services.impls;
 
+import entities.Clinic;
 import entities.Doctor;
-import repositories.interfaces.BaseUserRepository;
 import repositories.interfaces.DoctorRepository;
 import services.interfaces.DoctorService;
 
-public class DoctorServiceImpl extends BaseUserServiceImpl<Doctor> implements DoctorService {
-    public DoctorServiceImpl(BaseUserRepository<Doctor> repository) {
+import java.util.List;
+
+public class DoctorServiceImpl extends BaseServiceImpl<Doctor,DoctorRepository> implements DoctorService {
+    public DoctorServiceImpl(DoctorRepository repository) {
         super(repository);
+    }
+
+    @Override
+    public Doctor findByUsername(String username) {
+        return repository.readByUsername(username);
+    }
+
+    @Override
+    public List<Doctor> findAllByClinic(Clinic clinic) {
+        return repository.readAllByClinic(clinic);
     }
 }

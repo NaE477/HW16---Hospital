@@ -58,7 +58,7 @@ public class DoctorController {
         int hour = utils.hourReceiver();
         int minute = utils.minuteReceiver();
         LocalDateTime time = LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),day,hour,minute);
-        Appointment appointment = new Appointment(doctor,null,time,false);
+        Appointment appointment = new Appointment(doctor,null,time,false,null);
         if (appointmentService.insert(appointment) != null) System.out.println("Appointment Saved");
         else System.out.println("Something went wrong with the controller");
     }

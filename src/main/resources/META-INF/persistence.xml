@@ -15,7 +15,6 @@
         <class>entities.Clinic</class>
         <class>entities.Doctor</class>
         <class>entities.Patient</class>
-        <class>entities.Prescription</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         

@@ -22,9 +22,5 @@ public class Doctor extends User {
 
     @OneToMany(mappedBy = "doctor")
     @ToString.Exclude
-    private Set<Prescription> prescriptions;
-
-    @OneToMany(mappedBy = "doctor")
-    @ToString.Exclude
     private Set<Appointment> appointments;
 }
