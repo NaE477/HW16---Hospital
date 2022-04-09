@@ -4,13 +4,12 @@ import entities.base.User;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.Duration;
 import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@ToString(callSuper = true)
 @Entity
 public class Doctor extends User {
     public Doctor(String username,String password,Clinic clinic) {
@@ -22,8 +21,10 @@ public class Doctor extends User {
     private Clinic clinic;
 
     @OneToMany(mappedBy = "doctor")
+    @ToString.Exclude
     private Set<Prescription> prescriptions;
 
     @OneToMany(mappedBy = "doctor")
+    @ToString.Exclude
     private Set<Appointment> appointments;
 }

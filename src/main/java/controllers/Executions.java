@@ -26,7 +26,7 @@ public class Executions {
     private static final Utilities utils = new Utilities();
 
     public static void main(String[] args) {
-        addFirstAdmin();
+        initialize();
         label:
         while (true) {
             System.out.println("Press L/l to Login or S/s to Signup or X/x to exit: ");
@@ -70,12 +70,13 @@ public class Executions {
     }
 
     private static void guideDoctor(Integer doctorId) {
-        /*CustomerController controller = new CustomerController(factory,customerId);
-        controller.entry();*/
+        DoctorController controller = new DoctorController(factory,doctorId);
+        controller.entry();
     }
 
     private static void guidePatient(Integer patientId) {
-
+        PatientController controller = new PatientController(factory,patientId);
+        controller.entry();
     }
 
     public static void signUp() {
@@ -99,10 +100,11 @@ public class Executions {
         }
     }
 
-    private static void addFirstAdmin() {
+    private static void initialize() {
         if (adminService.findAll().size() == 0) {
             adminService.insert(new Admin("admin","admin"));
             System.out.println("User: admin Pass: admin added");
         }
+        System.setProperty("user.timezone", "Asia/Tehran");
     }
 }

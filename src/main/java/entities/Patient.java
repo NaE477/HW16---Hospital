@@ -12,12 +12,14 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(callSuper = true)
 @Entity
 public class Patient extends User {
     @OneToMany(mappedBy = "patient")
+    @ToString.Exclude
     private Set<Prescription> prescriptions;
 
     @OneToMany(mappedBy = "patient")
+    @ToString.Exclude
     private Set<Appointment> appointments;
 }

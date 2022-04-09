@@ -44,6 +44,7 @@ public class AdminController {
             System.out.println("2-Add Clinic(Add before adding doctor)");
             System.out.println("3-Add Doctor");
             System.out.println("0-Exit");
+            System.out.print("Option: ");
             String option = sc.nextLine();
             switch (option) {
                 case "1":

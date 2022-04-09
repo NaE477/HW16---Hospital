@@ -2,6 +2,8 @@ package controllers;
 
 import entities.base.BaseEntity;
 
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -93,6 +95,40 @@ public class Utilities {
                     .findAny()
                     .orElse(null);
         else return null;
+    }
+
+    public Integer dayReceiver() {
+        while (true) {
+            System.out.print("Day of Month: ");
+            int day = intReceiver();
+            try {
+                LocalDateTime date = LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), day,0,0);
+                if (date.getDayOfMonth() >= LocalDateTime.now().getDayOfMonth()) return day;
+                else System.out.println("Previous days not accepted");
+            } catch (DateTimeException e) {
+                System.out.println("Enter a correct day of month");
+            }
+        }
+    }
+
+    public int hourReceiver() {
+        while (true) {
+            System.out.print("Hour: ");
+            int hour = intReceiver();
+            if (hour > 23 || hour < 0) {
+                System.out.print("Enter a valid hour: ");
+            } else return hour;
+        }
+    }
+
+    public int minuteReceiver() {
+        while (true) {
+            System.out.print("Minute: ");
+            int minute = intReceiver();
+            if (minute > 59 || minute < 0) {
+                System.out.print("Enter a valid minute: ");
+            } else return minute;
+        }
     }
 
     public void printRed(String input) {

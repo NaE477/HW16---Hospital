@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@ToString(callSuper = true)
 @Entity
 public class Admin extends User {
     public Admin(String username, String password) {
