@@ -3,27 +3,26 @@ package entities;
 import entities.base.User;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.Duration;
 import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString
 @Entity
 public class Doctor extends User {
+    public Doctor(String username,String password,Clinic clinic) {
+        super(username,password);
+        this.clinic = clinic;
+    }
+
     @ManyToOne
     private Clinic clinic;
 
-    @OneToOne(mappedBy = "doctor")
+    @OneToMany(mappedBy = "doctor")
     private Set<Prescription> prescriptions;
-
-    private Set<Duration> freeTimes;
 
     @OneToMany(mappedBy = "doctor")
     private Set<Appointment> appointments;

@@ -8,4 +8,9 @@ public class ClinicServiceImpl extends BaseServiceImpl<Clinic, ClinicRepository>
     public ClinicServiceImpl(ClinicRepository repository) {
         super(repository);
     }
+
+    @Override
+    public Clinic findByName(String clinicName) {
+        return repository.readByName(clinicName);
+    }
 }

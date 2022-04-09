@@ -5,7 +5,7 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import java.time.Duration;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -20,5 +20,7 @@ public class Appointment extends BaseEntity {
     @ManyToOne
     private Patient patient;
 
-    private Duration appointmentTime;
+    private LocalDateTime appointmentTime;
+
+    private Boolean isBooked;
 }

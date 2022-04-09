@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Getter
@@ -17,9 +18,9 @@ public class Prescription extends BaseEntity {
     @Column(nullable = false)
     private String prescription;
 
-    @OneToOne(mappedBy = "prescriptions")
+    @ManyToOne
     private Doctor doctor;
 
-    @OneToOne(mappedBy = "prescriptions")
+    @ManyToOne
     private Patient patient;
 }

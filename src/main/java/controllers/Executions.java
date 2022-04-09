@@ -65,8 +65,8 @@ public class Executions {
     }
 
     private static void guideAdmin(Integer adminId) {
-        /*AdminController controller = new AdminController(factory,adminId);
-        controller.entry();*/
+        AdminController controller = new AdminController(factory,adminId);
+        controller.entry();
     }
 
     private static void guideDoctor(Integer doctorId) {

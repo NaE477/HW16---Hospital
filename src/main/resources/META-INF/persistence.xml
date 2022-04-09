@@ -10,6 +10,12 @@
 
         <class>entities.base.BaseEntity</class>
         <class>entities.base.User</class>
+        <class>entities.Admin</class>
+        <class>entities.Appointment</class>
+        <class>entities.Clinic</class>
+        <class>entities.Doctor</class>
+        <class>entities.Patient</class>
+        <class>entities.Prescription</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         
