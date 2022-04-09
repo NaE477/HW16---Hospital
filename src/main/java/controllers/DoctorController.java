@@ -11,7 +11,10 @@ import services.interfaces.DoctorService;
 
 import javax.persistence.EntityManagerFactory;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class DoctorController {
     private final EntityManagerFactory factory;
@@ -33,6 +36,7 @@ public class DoctorController {
             System.out.println("Welcome " + doctor.getUsername());
             System.out.println("1-Add Appointment Time");
             System.out.println("2-View Profile");
+            System.out.println("3-Write Prescription");
             System.out.println("0-Exit");
             System.out.print("Option: ");
             String option = sc.nextLine();
@@ -43,6 +47,8 @@ public class DoctorController {
                 case "2":
                     System.out.println(doctor);
                     break;
+                case "3":
+                    writePrescription();
                 case "0":
                     break label;
                 default:
@@ -63,5 +69,21 @@ public class DoctorController {
         else System.out.println("Something went wrong with the controller");
     }
 
-
+    private void writePrescription() {
+        AppointmentService appointmentService = new AppointmentServiceImpl(new AppointmentRepositoryImpl(factory,Appointment.class));
+        List<Appointment> unwrittenPrescribeAppointments = appointmentService.findAllByDoctor(doctor).stream().filter(a -> a.getPrescription() == null && a.getIsBooked()).collect(Collectors.toList());
+        utils.iterateThrough(unwrittenPrescribeAppointments);
+        System.out.print("Enter appointment ID: ");
+        Integer appointmentId = utils.intReceiver();
+        Appointment appointment = unwrittenPrescribeAppointments.stream().filter(a -> Objects.equals(a.getId(), appointmentId)).findAny().orElse(null);
+        if (appointment == null) System.out.println("Wrong appointment ID");
+        else {
+            System.out.println("Enter Prescription:");
+            String prescription = sc.nextLine();
+            appointment.setPrescription(prescription);
+            var toUpdate = appointmentService.update(appointment);
+            if (toUpdate != null) System.out.println("Prescription saved");
+            else System.out.println("Something went wrong with the database");
+        }
+    }
 }
