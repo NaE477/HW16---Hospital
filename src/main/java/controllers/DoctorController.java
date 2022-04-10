@@ -49,6 +49,7 @@ public class DoctorController {
                     break;
                 case "3":
                     writePrescription();
+                    break;
                 case "0":
                     break label;
                 default:
@@ -60,19 +61,16 @@ public class DoctorController {
 
     private void addAppointmentTime() {
         AppointmentService appointmentService = new AppointmentServiceImpl(new AppointmentRepositoryImpl(factory,Appointment.class));
-        Integer day = utils.dayReceiver();
-        int hour = utils.hourReceiver();
-        int minute = utils.minuteReceiver();
-        LocalDateTime time = LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),day,hour,minute);
-        Appointment appointment = new Appointment(doctor,null,time,false,null);
+        LocalDateTime time = utils.futureTimeReceiver();
+        Appointment appointment = new Appointment(doctor,null,time,false,"");
         if (appointmentService.insert(appointment) != null) System.out.println("Appointment Saved");
         else System.out.println("Something went wrong with the controller");
     }
 
     private void writePrescription() {
         AppointmentService appointmentService = new AppointmentServiceImpl(new AppointmentRepositoryImpl(factory,Appointment.class));
-        List<Appointment> unwrittenPrescribeAppointments = appointmentService.findAllByDoctor(doctor).stream().filter(a -> a.getPrescription() == null && a.getIsBooked()).collect(Collectors.toList());
-        utils.iterateThrough(unwrittenPrescribeAppointments);
+        List<Appointment> unwrittenPrescribeAppointments = appointmentService.findAllByDoctor(doctor).stream().filter(a -> Objects.equals(a.getPrescription(), "") && a.getIsBooked()).collect(Collectors.toList());
+        unwrittenPrescribeAppointments.forEach(a -> System.out.println("ID=" + a.getId() + ", Patient= " + a.getPatient().getUsername() + ", Time= " + a.getAppointmentTime()));
         System.out.print("Enter appointment ID: ");
         Integer appointmentId = utils.intReceiver();
         Appointment appointment = unwrittenPrescribeAppointments.stream().filter(a -> Objects.equals(a.getId(), appointmentId)).findAny().orElse(null);
@@ -84,6 +82,14 @@ public class DoctorController {
             var toUpdate = appointmentService.update(appointment);
             if (toUpdate != null) System.out.println("Prescription saved");
             else System.out.println("Something went wrong with the database");
+        }
+    }
+
+    private String prescriptionReceiver() {
+        while (true) {
+            String prescription = sc.nextLine();
+            if (!prescription.equals("")) return prescription;
+            else System.out.println("Write something!");
         }
     }
 }

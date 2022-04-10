@@ -3,6 +3,7 @@ package controllers;
 import entities.base.BaseEntity;
 
 import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -62,9 +63,9 @@ public class Utilities {
         }
     }
 
-    public String randomFiller(Integer size, Character lowerBound, Character upperBound){
+    public String randomFiller(Integer size, Character lowerBound, Character upperBound) {
         StringBuilder output = new StringBuilder();
-        if(((int) upperBound - lowerBound) >= size) { //characters range should not be smaller than the input size
+        if (((int) upperBound - lowerBound) >= size) { //characters range should not be smaller than the input size
             while (output.length() < size) {
                 output.append(Utilities.rangedBaseRandomizer(lowerBound, upperBound));
             }
@@ -72,7 +73,7 @@ public class Utilities {
         } else return null;
     }
 
-    public static Character rangedBaseRandomizer(Character lowerBound,Character upperBound){
+    public static Character rangedBaseRandomizer(Character lowerBound, Character upperBound) {
         return (char) ((int) (Math.random() * (upperBound - lowerBound) + lowerBound));
     }
 
@@ -97,37 +98,94 @@ public class Utilities {
         else return null;
     }
 
-    public Integer dayReceiver() {
+
+    public LocalDateTime futureTimeReceiver() {
         while (true) {
-            System.out.print("Day of Month: ");
+            int year = futureYearReceiver();
+            int month = futureMonthReceiver(year);
+            int day = futureDayReceiver(year, month);
+            int hour = futureHourReceiver(LocalDate.of(year, month, day));
+            int minute = futureMinuteReceiver(hour);
+            try {
+                return LocalDateTime.of(year, month, day, hour, minute);
+            } catch (Exception e) {
+                System.out.println("Wrong date format");
+            }
+        }
+    }
+
+    public Integer futureYearReceiver() {
+        while (true) {
+            System.out.print("Year: ");
+            int year = intReceiver();
+            if (year >= LocalDateTime.now().getYear()) return year;
+            else System.out.println("Previous years not accepted");
+        }
+    }
+
+    public Integer futureMonthReceiver(Integer year) {
+        while (true) {
+            if (year == LocalDateTime.now().getYear()) {
+                System.out.print("Month(" + LocalDateTime.now().getMonth().getValue() + "-12): ");
+                int month = intReceiver();
+                if (month >= LocalDateTime.now().getMonth().getValue() && month <= 12) return month;
+                else System.out.println("Previous months not accepted");
+            } else {
+                System.out.print("Month(1-12): ");
+                int month = intReceiver();
+                if (month >= 1 && month <= 12) return month;
+                else System.out.println("Wrong month");
+            }
+        }
+    }
+
+    public Integer futureDayReceiver(Integer year, Integer month) {
+        while (true) {
+            System.out.print("Day: ");
             int day = intReceiver();
             try {
-                LocalDateTime date = LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), day,0,0);
-                if (date.getDayOfMonth() >= LocalDateTime.now().getDayOfMonth()) return day;
-                else System.out.println("Previous days not accepted");
+                if (day >= LocalDateTime.now().getDayOfMonth())
+                    return LocalDateTime.of(year, month, day, 0, 0).getDayOfMonth();
+                else System.out.println("Previous months not accepted");
             } catch (DateTimeException e) {
                 System.out.println("Enter a correct day of month");
             }
         }
     }
 
-    public int hourReceiver() {
+    public int futureHourReceiver(LocalDate date) {
         while (true) {
-            System.out.print("Hour: ");
-            int hour = intReceiver();
-            if (hour > 23 || hour < 0) {
-                System.out.print("Enter a valid hour: ");
-            } else return hour;
+            if (date.getYear() == LocalDate.now().getYear()
+                    && date.getMonth() == LocalDate.now().getMonth()
+                    && date.getDayOfMonth() == LocalDate.now().getDayOfMonth()) {
+                System.out.print("Hour(" + LocalDateTime.now().getHour() + "-23): ");
+                int hour = intReceiver();
+                if (hour > 23 || hour < 0 || hour < LocalDateTime.now().getHour()) {
+                    System.out.println("Enter a valid hour");
+                } else return hour;
+            } else {
+                System.out.print("Hour(1-23): ");
+                int hour = intReceiver();
+                if (hour > 23 || hour < 0) {
+                    System.out.println("Enter a valid hour");
+                } else return hour;
+            }
         }
     }
 
-    public int minuteReceiver() {
+    public int futureMinuteReceiver(Integer hour) {
         while (true) {
-            System.out.print("Minute: ");
-            int minute = intReceiver();
-            if (minute > 59 || minute < 0) {
-                System.out.print("Enter a valid minute: ");
-            } else return minute;
+            if (hour == LocalDateTime.now().getHour()) {
+                System.out.print("Minute(" + LocalDateTime.now().getMinute()+1 + "-59): ");
+                int minute = intReceiver();
+                if (minute > LocalDateTime.now().getMinute() && minute <= 59) return minute;
+                else System.out.println("Wrong minute");
+            } else {
+                System.out.print("Minute(0-59): ");
+                int minute = intReceiver();
+                if (minute <= 59 && minute >= 0) return minute;
+                else System.out.println("Enter a valid minute");
+            }
         }
     }
 

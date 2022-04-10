@@ -98,7 +98,7 @@ public class AdminController {
         Clinic clinic = clinicReceiver();
         if (clinic != null) {
             Doctor toIns = doctorService.insert(new Doctor(username, password, clinic));
-            if (toIns != null) System.out.println("Admin created");
+            if (toIns != null) System.out.println("Doctor created");
             else System.out.println("Something went wrong with the database.");
         } else {
             System.out.println("Choosing clinic led to problem");
@@ -124,7 +124,7 @@ public class AdminController {
 
         while (true) {
             String clinicName = sc.nextLine();
-            if (clinicService.findByName(clinicName) != null) return clinicName;
+            if (clinicService.findByName(clinicName) == null) return clinicName;
             else System.out.println("Clinic Name already Exists");
         }
     }

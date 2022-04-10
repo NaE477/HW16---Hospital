@@ -9,7 +9,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(callSuper = true)
 @Entity
 public class Doctor extends User {
     public Doctor(String username,String password,Clinic clinic) {
@@ -17,10 +16,19 @@ public class Doctor extends User {
         this.clinic = clinic;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Clinic clinic;
 
-    @OneToMany(mappedBy = "doctor")
+    @OneToMany(mappedBy = "doctor",fetch = FetchType.EAGER)
     @ToString.Exclude
     private Set<Appointment> appointments;
+
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                "ID=" + super.getId() +
+                ", name=" + super.getUsername() +
+                ", clinic=" + clinic.getClinicName() +
+                '}';
+    }
 }

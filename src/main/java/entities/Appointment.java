@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
@@ -12,13 +13,12 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Entity
 public class Appointment extends BaseEntity {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Doctor doctor;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Patient patient;
 
     private LocalDateTime appointmentTime;

@@ -12,7 +12,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 public class Clinic extends BaseEntity {
     @Column(nullable = false,unique = true)
@@ -20,4 +19,12 @@ public class Clinic extends BaseEntity {
 
     @OneToMany(mappedBy = "clinic",fetch = FetchType.EAGER)
     private Set<Doctor> doctors;
+
+    @Override
+    public String toString() {
+        return "Clinic{" +
+                "ID='" + super.getId() + '\'' +
+                "clinicName='" + clinicName + '\'' +
+                '}';
+    }
 }

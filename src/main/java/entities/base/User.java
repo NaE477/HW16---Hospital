@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
-@ToString
+@ToString(callSuper = true)
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "users")

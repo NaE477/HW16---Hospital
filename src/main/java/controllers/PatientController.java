@@ -43,8 +43,7 @@ public class PatientController {
         while (true) {
             System.out.println("Welcome " + patient.getUsername());
             System.out.println("1-Reserve Appointment");
-            System.out.println("2-");
-            System.out.println("1-");
+            System.out.println("2-View Prescriptions");
             System.out.println("0-Exit");
             String option = sc.nextLine();
             switch (option) {
@@ -53,6 +52,7 @@ public class PatientController {
                     break;
                 case "2":
                     viewPrescriptions();
+                    break;
                 case "0":
                     break label;
                 default:
@@ -105,7 +105,7 @@ public class PatientController {
         AppointmentService appointmentService = new AppointmentServiceImpl(new AppointmentRepositoryImpl(factory,Appointment.class));
         List<Appointment> appointments = appointmentService.findAllByDoctor(doctor);
         List<Appointment> freeAppointments = appointments.stream().filter(a -> !a.getIsBooked()).collect(Collectors.toList());
-        utils.iterateThrough(freeAppointments);
+        freeAppointments.forEach(a -> System.out.println("ID: " + a.getId() + ", Doctor: " + a.getDoctor() + ", Time: " + a.getAppointmentTime()));
         System.out.println("Enter appointment ID: ");
         Integer appointmentId = utils.intReceiver();
         return appointmentService.findById(appointmentId);
@@ -113,7 +113,10 @@ public class PatientController {
 
     private void viewPrescriptions() {
         AppointmentService appointmentService = new AppointmentServiceImpl(new AppointmentRepositoryImpl(factory,Appointment.class));
-        List<String> prescriptions = appointmentService.findAllByPatient(patient).stream().map(Appointment::getPrescription).filter(Objects::nonNull).collect(Collectors.toList());
-        utils.iterateThrough(prescriptions);
+        appointmentService
+                .findAllByPatient(patient)
+                .stream()
+                .filter(a -> !Objects.equals(a.getPrescription(), ""))
+                .forEach(a -> System.out.println("Doctor: " + a.getDoctor().getUsername() + ", Prescription: " + a.getPrescription()));
     }
 }
