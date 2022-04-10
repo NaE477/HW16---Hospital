@@ -26,4 +26,12 @@ public class Appointment extends BaseEntity {
     private Boolean isBooked;
 
     private String prescription;
+
+    @Override
+    public String toString() {
+        return "Doctor: " + doctor.getUsername()
+                + " , Time= " + appointmentTime
+                + " , Booked: " + isBooked
+                + " , Prescription: " + prescription;
+    }
 }

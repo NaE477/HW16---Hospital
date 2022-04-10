@@ -13,7 +13,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @MappedSuperclass
 public abstract class BaseEntity {
     @Id
@@ -31,6 +30,11 @@ public abstract class BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "ID= " + id;
     }
 }
 

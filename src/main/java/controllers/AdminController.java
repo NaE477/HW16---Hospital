@@ -43,6 +43,8 @@ public class AdminController {
             System.out.println("1-Add Admin");
             System.out.println("2-Add Clinic(Add before adding doctor)");
             System.out.println("3-Add Doctor");
+            System.out.println("4-Checkout Doctor History");
+            System.out.println("5-Checkout Patient History");
             System.out.println("0-Exit");
             System.out.print("Option: ");
             String option = sc.nextLine();
@@ -55,6 +57,12 @@ public class AdminController {
                     break;
                 case "3":
                     addDoctor();
+                    break;
+                case "4":
+                    checkDoctor();
+                    break;
+                case "5":
+                    checkPatient();
                     break;
                 case "0":
                     break label;
@@ -78,11 +86,12 @@ public class AdminController {
     }
 
     private void addClinic() {
-        ClinicService clinicService = new ClinicServiceImpl(new ClinicRepositoryImpl(factory,Clinic.class));
+        ClinicService clinicService = new ClinicServiceImpl(new ClinicRepositoryImpl(factory, Clinic.class));
 
         System.out.println("Clinic Name: ");
         String clinicName = clinicNameReceiver();
-        Clinic clinic = new Clinic(); clinic.setClinicName(clinicName);
+        Clinic clinic = new Clinic();
+        clinic.setClinicName(clinicName);
         Clinic toSave = clinicService.insert(clinic);
         if (toSave != null) System.out.println("Clinic Added");
         else System.out.println("Something went wrong with the database");
@@ -120,7 +129,7 @@ public class AdminController {
     }
 
     private String clinicNameReceiver() {
-        ClinicService clinicService = new ClinicServiceImpl(new ClinicRepositoryImpl(factory,Clinic.class));
+        ClinicService clinicService = new ClinicServiceImpl(new ClinicRepositoryImpl(factory, Clinic.class));
 
         while (true) {
             String clinicName = sc.nextLine();
@@ -140,5 +149,27 @@ public class AdminController {
             Integer clinicId = utils.intReceiver();
             return clinicService.findById(clinicId);
         }
+    }
+
+    private void checkDoctor() {
+        DoctorService doctorService = new DoctorServiceImpl(new DoctorRepositoryImpl(factory, Doctor.class));
+        List<Doctor> doctors = doctorService.findAll();
+        utils.iterateThrough(doctors);
+        System.out.print("Enter doctor ID: ");
+        Integer doctorID = utils.intReceiver();
+        Doctor doctor = doctorService.findById(doctorID);
+        if (doctor != null) doctor.getAppointments().forEach(System.out::println);
+        else System.out.println("Wrong Doctor ID");
+    }
+
+    private void checkPatient() {
+        PatientService patientService = new PatientServiceImpl(new PatientRepositoryImpl(factory, Patient.class));
+        List<Patient> patients = patientService.findAll();
+        utils.iterateThrough(patients);
+        System.out.print("Enter patient ID: ");
+        Integer patientID = utils.intReceiver();
+        Patient patient = patientService.findById(patientID);
+        if (patient != null) patient.getAppointments().forEach(System.out::println);
+        else System.out.println("Wrong Patient ID");
     }
 }
